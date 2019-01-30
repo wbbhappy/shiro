@@ -8,18 +8,13 @@ import org.pan.bean.Role;
 import org.pan.bean.User;
 import org.pan.service.SecurityService;
 import org.pan.service.impl.SecurityServiceImpl;
-
 import java.util.Iterator;
 import java.util.Set;
 
-/**
- * Created by panmingzhi on 2014/6/24.
- */
 public class MyRealm extends AuthorizingRealm {
 
     private SecurityService securityService = new SecurityServiceImpl();
 
-    @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         SimpleAuthorizationInfo sai = new SimpleAuthorizationInfo();
         String userName = (String)principalCollection.fromRealm(getName()).iterator().next();
@@ -39,7 +34,6 @@ public class MyRealm extends AuthorizingRealm {
         return sai;
     }
 
-    @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
         User user = securityService.findUserByUserName(token.getUsername());
@@ -49,6 +43,4 @@ public class MyRealm extends AuthorizingRealm {
             return null;
         }
     }
-
-
 }
